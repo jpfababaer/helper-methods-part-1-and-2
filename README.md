@@ -55,4 +55,31 @@ movies_new GET    /movies/new(.:format)                      movies#new
 NEXT: routes.rb
 ====================================================
 
-3. With the :as option symbol, we get to name the method 
+Basic feature of an automated spec: from spec/features/1_basic_spec.rb
+
+describe "The /movies/new page" do
+  # ...
+  it "creates a movie successfully", point: 1 do
+    visit "/movies/new"
+
+    fill_in "Title", with: "My test movie"
+    fill_in "Description", with: "description"
+    click_button "Create Movie"
+
+    expect(page).to have_content("Movie created successfully."),
+      "Expected to fill in the new movie form, click 'Create Movie', and be redirected to the movie index with a success notice"
+  end
+
+-This test does what a user is expected to do when given a certain page. 
+
+Flow:
+
+1. We "describe" a URL path that we want to test (i.e. /movies/new)
+
+2. Run a test that checks that "it creates a movies successfully".
+
+3. This is where we begin what is expected of a user: the test block begins by...
+        -...visiting the URL path = user places the URL into the address box
+        -the test "fill_in" the "Title" and "Description"... = user inputs their information to the box
+        -...then "click_button" of "Create Movie" = user clicks the "Create Movie" button 
+        -The test "expect" the ending "page" to "have_content" of "Movie created successfully" = end-point page should display this message or the test fails. 
